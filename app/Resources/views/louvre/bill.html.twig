@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                  {% for ticket in tickets %}
+                  {% for ticket in command.tickets %}
                         <tr>
                             <td>{{ ticket.lastname|upper }}</td>
                             <td>{{ ticket.firstname|capitalize }}</td>

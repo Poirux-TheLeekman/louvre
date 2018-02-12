@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 
@@ -34,7 +35,7 @@ class LouvreController extends Controller
      *
      * @Route("/command/new", name="command")
      */
-    public function addAction(Request $request)
+    public function addAction(Request $request, SessionInterface $session)
     {
         //declare mes variables services et paramètres.
         $command = new Command();
@@ -99,7 +100,9 @@ class LouvreController extends Controller
                     
                     
                     $em->persist($command);
-                    $em->flush();
+                    $session->set('command',$command);
+                    
+                    
                     
                     
 
@@ -121,36 +124,30 @@ class LouvreController extends Controller
      *
      * @Route("/command/charge", name="charge")
      */
-    public function chargeAction(Request $request)
+    public function chargeAction(Request $request, SessionInterface $session)
     {
-
-        $commandId = $request->request->get('commandId');
-
+        
+        $command = $session->get('command');
         $em = $this->getDoctrine()->getManager();
-        $command = $em->getRepository('AppBundle\Entity\Command')->find($commandId);
-        $tickets = $em->getRepository('AppBundle\Entity\Ticket')->findAllTicketsByCommand($commandId);
-
+        
         $token  = $_POST['stripeToken'];
         $email  = $_POST['stripeEmail'];
         $card = $this->get('stripe.card');
         
         
         try {
+            
             $paid = $card->chargeVisa($token, $email, $command->getTotalOrder());
-            $command->setPaid(1);
-            $em->persist($command);
             $em->flush();
             
             return $this->render('louvre/bill.html.twig', array(
-                    'command'=>$command,
-                    'tickets'=>$tickets
+                    'command'=>$command
                     ));
         } catch(\Stripe\Error\Card $e) {
 
             $this->addFlash("chargeFailed","Oups, le paiement a echoué.");
             return $this->render('louvre/charge.html.twig', array(
                     'command'=>$command,
-                    'tickets'=>$tickets,
                     'description' => "poursuivre le paiement",
                     "publishable_key" => "pk_test_22Upp5xyncxXUx9EfBE54yEn"
                     ));
