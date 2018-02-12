@@ -1,0 +1,22 @@
+{% extends "louvre/layout.html.twig" %}
+{% block content %}
+<h3>Le musée du louvre a vendu {{ nbticket }} billets le {{ datevisit }}.</h3>
+	<table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Propiétaire</th>
+                <th>Mail</th>
+                <th>Date commande</th>
+            </tr>
+        </thead>
+        <tbody>
+        	{% for genus in genuses %}
+                <tr>
+                    <td>{{ genus.holder }}</td>
+                    <td>{{ genus.mail }}</td>
+                     <td>{{ genus.datecommand|date('d-m-Y') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

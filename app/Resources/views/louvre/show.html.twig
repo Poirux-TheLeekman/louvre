@@ -1,0 +1,17 @@
+{% extends "louvre/layout.html.twig" %}
+{% block content %}
+	<h2 class="genus-name">{{ genus.holder }}</h2>
+    <div class="sea-creature-container">
+        <div class="genus-photo"></div>
+        <div class="genus-details">
+            <dl class="genus-details-list">
+                <dt>mail:</dt>
+                <dd>{{ genus.mail }}</dd>
+                <dt>Known Species:</dt>
+                <dd>{{ genus.datecommand|date('d-m-Y') }}</dd>
+                <dt>total Order:</dt>
+                <dd>{{ genus.totalOrder }}</dd>
+            </dl>
+        </div>
+    </div>
+{% endblock %}
