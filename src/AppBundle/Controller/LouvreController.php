@@ -102,10 +102,6 @@ class LouvreController extends Controller
                     $em->persist($command);
                     $session->set('command',$command);
                     
-                    
-                    
-                    
-
                     return $this->render('louvre/charge.html.twig', array(
                     
                     'command'=>$command,
