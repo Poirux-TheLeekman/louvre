@@ -35,6 +35,7 @@ class CommandType extends AbstractType
             ->add('termsAccepted', CheckboxType::class, array(
                 'mapped' => false,
                 'constraints' => new IsTrue(),
+                'label' => 'Conditions générales acceptées'
             ))
             ->add('reset', ResetType::class , array('label' => 'Annuler'))
             ->add('save', SubmitType::class, array('label' => 'Continuer'));
