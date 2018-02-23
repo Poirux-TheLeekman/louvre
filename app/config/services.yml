@@ -19,6 +19,8 @@ services:
         class: AppBundle\Service\Calculator
     stripe.card:
         class: AppBundle\Service\StripeCheckOut
+    mail:
+        class: AppBundle\Service\Mail
     limit.visit:
         class: AppBundle\Service\LimitVisit
         arguments: ['@doctrine.orm.entity_manager']

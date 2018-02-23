@@ -37,8 +37,8 @@ class CommandType extends AbstractType
                 'constraints' => new IsTrue(),
                 'label' => 'Conditions générales acceptées'
             ))
-            ->add('reset', ResetType::class , array('label' => 'Annuler'))
-            ->add('save', SubmitType::class, array('label' => 'Continuer'));
+            ->add('reset', ResetType::class , array('label' => 'Annuler la commande'))
+            ->add('save', SubmitType::class, array('label' => 'Continuer la commande'));
     }/**
      * {@inheritdoc}
      */

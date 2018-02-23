@@ -5,6 +5,10 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Command;
 use AppBundle\Entity\Ticket;
 use AppBundle\Form\CommandType;
+use AppBundle\Service\Calculator;
+use AppBundle\Service\GenerateReference;
+use AppBundle\Service\StripeCheckOut;
+use AppBundle\Service\Mail;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,14 +39,14 @@ class LouvreController extends Controller
      *
      * @Route("/command/new", name="command")
      */
-    public function addAction(Request $request, SessionInterface $session)
+    public function addAction(Request $request, SessionInterface $session, Calculator $calculator, GenerateReference $GenerateReference)
     {
         //declare mes variables services et paramètres.
         $command = new Command();
         $tickets = new Ticket();
-        $agewithservice = $this->get('calculator.date');
+        
         $cost = $this->container->getParameter('ticket.type');
-        $reference = $this->get('generate.reference');
+       
         
         $datestring = $command->getDatecommand()->format('Y-m-d H:i:s');
         
@@ -55,25 +59,21 @@ class LouvreController extends Controller
                 if ($form->isSubmitted() && $form->isValid()) {
                 
                 //genere le code référence de la commande.
-                $holder = $command->getHolder();
-                $ref = $reference->createReference($datestring,$holder);
-                $command->setReference($ref);
-
                 
+                $command->setReference($GenerateReference->createReference($datestring, $command->getHolder()));
                 
                 foreach ($command->getTickets() as $tickets) {
                     //lie les tickets à la commande en BDD
                     $tickets->setCommand($command);
- 
-                    $ag = $agewithservice->ageVisitor($tickets->getBirthday()->format('m/d/Y'));
-                    $typeV = $agewithservice->typeVisitor($ag);
+                    $type = $calculator->typeVisitor($tickets->getBirthday()->format('m/d/Y'));
+                    
 
-                    $tickets->setType($typeV);
-                    if ($tickets->getOffer() && $typeV!='Gratuit') {
+                    $tickets->setType($type);
+                    if ($tickets->getOffer() && $type!='Gratuit') {
                         $tickets->setPrice('10');
                     }
                     else {
-                        $tickets->setPrice($cost[$typeV]);
+                        $tickets->setPrice($cost[$type]);
                     }
 
 
@@ -83,17 +83,18 @@ class LouvreController extends Controller
 
                 }
                 
+                
                 $dateformat = $tickets->getVisit()->format('Y-m-d');
                 $em = $this->getDoctrine()->getManager();
                 $nbticket = $em->getRepository('AppBundle\Entity\Ticket')
                 ->countNumberVisit($dateformat);
                 $limit = $this->get('limit.visit');
-                
-                $checkLimit = $limit->nbVisit($nbticket);
+
+                $checkLimit = $limit->nbVisit($nbticket,count($command->getTickets()));
                 
                 if($checkLimit) {
                     
-                    $this->addFlash("limit", "tous les billets du jour sont déjà vendus");
+                    $this->addFlash("limit", "tous les billets du jour sont déjà vendus, choisir ube autre date.");
                            return $this->render('louvre/add.html.twig', array(
                 'form' => $form->createView()));
                 }
@@ -120,7 +121,7 @@ class LouvreController extends Controller
      *
      * @Route("/command/charge", name="charge")
      */
-    public function chargeAction(Request $request, SessionInterface $session)
+    public function chargeAction(Request $request, SessionInterface $session, StripeCheckOut $stripeCheckOut, Mail $mail)
     {
         
         $command = $session->get('command');
@@ -128,14 +129,15 @@ class LouvreController extends Controller
         
         $token  = $_POST['stripeToken'];
         $email  = $_POST['stripeEmail'];
-        $card = $this->get('stripe.card');
+        
         
         
         try {
             
-            $paid = $card->chargeVisa($token, $email, $command->getTotalOrder());
-            $em->flush();
             
+            $stripeCheckOut->chargeVisa($token, $email, $command->getTotalOrder());
+            $em->flush();
+            $mail->sendMail($command, $email);
             return $this->render('louvre/bill.html.twig', array(
                     'command'=>$command
                     ));

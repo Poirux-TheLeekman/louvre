@@ -12,13 +12,10 @@ class LimitVisit
 		dump($em);
 	}*/
 
-	public function nbVisit($nbVisit)
+	public function nbVisit($nbVisit, $countTicket)
 	{
-            if($nbVisit>1000) {
-            	return true;
-            }
-            else {
-            	return false;
-            }
+           $limit = $nbVisit + $countTicket;
+
+           return($limit>1000);
 	}
 }
