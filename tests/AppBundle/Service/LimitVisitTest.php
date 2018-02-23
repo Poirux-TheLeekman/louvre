@@ -6,18 +6,18 @@ use AppBundle\Service\LimitVisit;
 
 class LimitVisitTest extends TestCase
 {
-	public function testAgeVisitorfFalse()
+	/*public function testNbVisitFalse()
 	{
 		$LimitVisit = new LimitVisit;
-		$result = $LimitVisit->nbVisit(1000);
+		$result = $LimitVisit->nbVisit(999, 1);
 		
 		 $this->assertEquals(false,$result);
-	}
+	}*/
 
-	public function testAgeVisitorfTrue()
+	public function testNbVisitfTrue()
 	{
 		$LimitVisit = new LimitVisit;
-		$result = $LimitVisit->nbVisit(1001);
+		$result = $LimitVisit->nbVisit(1000, 2);
 		
 		 $this->assertEquals(true,$result);
 	}
