@@ -153,40 +153,4 @@ class LouvreController extends Controller
 
     }
 
-    /**
-     * Matches /liste
-     * @Route("/liste", name="liste")
-     */
-    public function listAction()
-    {
-       
-        $datevisit = '2018-01-25';
-        $em = $this->getDoctrine()->getManager();
-        $genuses = $em->getRepository('AppBundle\Entity\Command')
-            ->findAll();
-        $nbticket = $em->getRepository('AppBundle\Entity\Ticket')
-            ->countNumberVisit($datevisit);
-
-        return $this->render('louvre/list.html.twig',[
-            'genuses' => $genuses,
-            'nbticket'=> $nbticket,
-            'datevisit' => $datevisit
-            
-        ]);  
-    }
-
-    /**
-     * @Route("/genus/{genusName}", name="genus_show")
-     */
-    public function showAction($genusName)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $genus = $em->getRepository('AppBundle\Entity\Command')
-            ->findOneBy(['holder' => $genusName]);
-        //dump($genuses);die;
-        return $this->render('louvre/show.html.twig',[
-            'genus' => $genus
-        ]);  
-    }
-
 }
