@@ -8,8 +8,8 @@
   
  class Mail 
  { 
-     const EMAIL = 'newsletter@ceorangeso.com'; 
-  
+     //const EMAIL = 'newsletter@ceorangeso.com'; 
+    const EMAIL = 'contact@projet4.yuqi.fr';
      private $twig; 
      private $mailer; 
   
@@ -24,11 +24,11 @@
      { 
          
          
-         $message = (new \Swift_Message('Louvre')) 
+         $message = (new \Swift_Message('Votre billet du Louvre.')) 
              ->setFrom(self::EMAIL) 
              ->setTo($mail) 
              ->setBody( 
-                 $this->twig->render('louvre/bill.html.twig', [ 
+                 $this->twig->render('louvre/mail.html.twig', [ 
                      'command'=>$command 
                  ]), 
                  'text/html' 

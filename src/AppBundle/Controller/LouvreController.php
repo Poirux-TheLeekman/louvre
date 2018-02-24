@@ -71,6 +71,7 @@ class LouvreController extends Controller
                     $tickets->setType($type);
                     if ($tickets->getOffer() && $type!='Gratuit') {
                         $tickets->setPrice('10');
+                        
                     }
                     else {
                         $tickets->setPrice($cost[$type]);

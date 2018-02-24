@@ -1,26 +1,28 @@
-{% extends "louvre/layout.html.twig" %}
+{% extends "base.html.twig" %}
 
 {% block title %}Index{% endblock %}
 
 
 
-{% block content %}
+{% block body %}
 <div class="container">
     <div class="row">
         <div class="col-lg-12 col-md-10 mx-auto">
-        <h1 class="">Votre achat a été réalisé avec succès, vous allez recevoir un mail dans quelques instants.</h1>
+        <h1 class="">Félicitations, pour accéder au musée, n'oubliez pas de vous munir de ce mail. </h1>
            <h2 class="">Récapitulatif de la commande :</h2>
-
-                <dt>Propriétaire de la commande:</dt>
-                <dd>{{ command.holder|upper }}</dd>
-                <dt>Référence de la commande:</dt>
-                <dd>{{ command.reference }}</dd>
-                <dt>Mail:</dt>
-                <dd>{{ command.mail }}</dd>
-                <dt>Date de la commande:</dt>
-                <dd>{{ command.datecommand|date('d-m-Y') }}</dd>
-                <dt>Reste à payer:</dt>
-                <dd>0 €</dd>
+            <dl>
+                <h3>
+                    <dt>Propriétaire de la commande:</dt>
+                    <dd>{{ command.holder|upper }}</dd>
+                    <dt>Référence de la commande:</dt>
+                    <dd>{{ command.reference }}</dd>
+                    <dt>Mail:</dt>
+                    <dd>{{ command.mail }}</dd>
+                    <dt>Date de la commande:</dt>
+                    <dd>{{ command.datecommand|date('d-m-Y') }}</dd>
+                    <dt>Reste à payer:</dt>
+                    <dd>0 €</dd>
+                </h3>
             </dl>
         </div>
     </div>
@@ -36,7 +38,7 @@
                         <th>Date de visite</th>
                         <th>Durée</th>
                         <th>Type billet</th>
-                        <th>Tarif réduit *</th>
+                        <th>Tarif réduit*</th>
                         <th>Prix</th>
                     </tr>
                 </thead>
@@ -71,8 +73,6 @@
 </div>
 
 <p>*Une carte d'étudiant, de retraité ou de vétéran militaire, sera à présenter à l'entrée pour tout tarif réduit coché.</p>
-
-<a href="{{ path('homepage') }}" class="btn btn-secondary"> Retour accueil</a>
     
 	
 	
