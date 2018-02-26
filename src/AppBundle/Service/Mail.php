@@ -9,7 +9,7 @@
  class Mail 
  { 
      //const EMAIL = 'newsletter@ceorangeso.com'; 
-    const EMAIL = 'contact@projet4.yuqi.fr';
+     const EMAIL = 'contact@projet4.yuqi.fr';
      private $twig; 
      private $mailer; 
   

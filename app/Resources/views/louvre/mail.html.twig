@@ -5,76 +5,81 @@
 
 
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12 col-md-10 mx-auto">
-        <h1 class="">Félicitations, pour accéder au musée, n'oubliez pas de vous munir de ce mail. </h1>
-           <h2 class="">Récapitulatif de la commande :</h2>
-            <dl>
-                <h3>
-                    <dt>Propriétaire de la commande:</dt>
-                    <dd>{{ command.holder|upper }}</dd>
-                    <dt>Référence de la commande:</dt>
-                    <dd>{{ command.reference }}</dd>
-                    <dt>Mail:</dt>
-                    <dd>{{ command.mail }}</dd>
-                    <dt>Date de la commande:</dt>
-                    <dd>{{ command.datecommand|date('d-m-Y') }}</dd>
-                    <dt>Reste à payer:</dt>
-                    <dd>0 €</dd>
-                </h3>
-            </dl>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-10 mx-auto">
+            <h1 class="">Félicitations, pour accéder au musée, n'oubliez pas de vous munir de ce mail. </h1>
+               <h2 class="">Récapitulatif de la commande :</h2>
+                <dl>
+                    <h3>
+                        <dt>Propriétaire de la commande:</dt>
+                        <dd>{{ command.holder|upper }}</dd>
+                        <dt>Référence de la commande:</dt>
+                        <dd>{{ command.reference }}</dd>
+                        <dt>Mail:</dt>
+                        <dd>{{ command.mail }}</dd>
+                        <dt>Date de la commande:</dt>
+                        <dd>{{ command.datecommand|date('d-m-Y') }}</dd>
+                        <dt>Reste à payer:</dt>
+                        <dd>0 €</dd>
+                    </h3>
+                </dl>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-lg-12 col-md-10 mx-auto">
-            <h2 class="">Liste des billets :</h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Date de visite</th>
-                        <th>Durée</th>
-                        <th>Type billet</th>
-                        <th>Tarif réduit*</th>
-                        <th>Prix</th>
-                    </tr>
-                </thead>
-                <tbody>
-                  {% for ticket in command.tickets %}
+        <div class="row">
+            <div class="col-lg-12 col-md-10 mx-auto">
+                <h2 class="">Liste des billets :</h2>
+                <table class="table table-striped">
+                    <thead>
                         <tr>
-                            <td>{{ ticket.lastname|upper }}</td>
-                            <td>{{ ticket.firstname|capitalize }}</td>
-                            <td>{{ ticket.visit|date('d-m-Y') }}</td>
-                            <td>
-                              {% if ticket.duration == 1 %}
-                                <p>Journée</p>
-                                {% else %}
-                                <p>Demi-journée</p>
-                              {% endif %}
-                            </td>
-                            <td>{{ ticket.type }}</td>
-                            <td>
-                              {% if ticket.offer == 1 %}
-                                <p>Oui</p>
-                                {% else %}
-                                <p>Non</p>
-                              {% endif %}
-                            </td>
-                            <td>{{ ticket.price }}€</td>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Date de visite</th>
+                            <th>Durée</th>
+                            <th>Type billet</th>
+                            <th>Tarif réduit*</th>
+                            <th>Prix</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                      {% for ticket in command.tickets %}
+                            <tr>
+                                <td>{{ ticket.lastname|upper }}</td>
+                                <td>{{ ticket.firstname|capitalize }}</td>
+                                <td>{{ ticket.visit|date('d-m-Y') }}</td>
+                                <td>
+                                  {% if ticket.duration == 1 %}
+                                    <p>Journée</p>
+                                    {% else %}
+                                    <p>Demi-journée</p>
+                                  {% endif %}
+                                </td>
+                                <td>{{ ticket.type }}</td>
+                                <td>
+                                  {% if ticket.offer == 1 %}
+                                    <p>Oui</p>
+                                    {% else %}
+                                    <p>Non</p>
+                                  {% endif %}
+                                </td>
+                                <td>{{ ticket.price }}€</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<p>*Une carte d'étudiant, de retraité ou de vétéran militaire, sera à présenter à l'entrée pour tout tarif réduit coché.</p>
-    
-	
+    <p>*Une carte d'étudiant, de retraité ou de vétéran militaire, sera à présenter à l'entrée pour tout tarif réduit coché.</p>
+
+    <P>Bonne Visite.</P>
+    <img src="{{ absolute_url('images/logo-louvre4.png') }}">    
+    <a href="{{ 'http://www.louvre.fr' }}">
+    <img src="{{ absolute_url('images/logo-louvre4.png') }}" height="50"></br>
+    Louvre.fr
+    </a>	
 	
 {% endblock %}
 	
