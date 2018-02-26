@@ -17,7 +17,7 @@ class CalculatorTest extends TestCase
 	public function testTypeVisitorNormal()
 	{
 		$calculator = new Calculator;
-		$result = $calculator->typeVisitor(59);
+		$result = $calculator->typeVisitor('04/08/1985');
 		
 		$this->assertEquals('Normal',$result);
 	}
@@ -25,7 +25,7 @@ class CalculatorTest extends TestCase
 	public function testTypeVisitorGratuit()
 	{
 		$calculator = new Calculator;
-		$result = $calculator->typeVisitor(3);
+		$result = $calculator->typeVisitor('04/08/2016');
 		
 		$this->assertEquals('Gratuit',$result);
 	}
@@ -33,7 +33,7 @@ class CalculatorTest extends TestCase
 	public function testTypeVisitorEnfant()
 	{
 		$calculator = new Calculator;
-		$result = $calculator->typeVisitor(11);
+		$result = $calculator->typeVisitor('01/01/2007');
 		
 		$this->assertEquals('Enfant',$result);
 	}
@@ -41,7 +41,7 @@ class CalculatorTest extends TestCase
 	public function testTypeVisitorSenior()
 	{
 		$calculator = new Calculator;
-		$result = $calculator->typeVisitor(60);
+		$result = $calculator->typeVisitor('1950/12/01');
 		
 		$this->assertEquals('Senior',$result);
 	}
