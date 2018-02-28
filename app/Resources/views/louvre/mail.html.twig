@@ -13,16 +13,25 @@
                 <dl>
                     <h3>
                         <dt>Propriétaire de la commande:</dt>
+                    </h3>    
                         <dd>{{ command.holder|upper }}</dd>
+                    <h3>   
                         <dt>Référence de la commande:</dt>
-                        <dd>{{ command.reference }}</dd>
-                        <dt>Mail:</dt>
-                        <dd>{{ command.mail }}</dd>
-                        <dt>Date de la commande:</dt>
-                        <dd>{{ command.datecommand|date('d-m-Y') }}</dd>
-                        <dt>Reste à payer:</dt>
-                        <dd>0 €</dd>
                     </h3>
+                        <dd>{{ command.reference }}</dd>
+                    <h3>   
+                        <dt>Mail:</dt>
+                    </h3>
+                        <dd>{{ command.mail }}</dd>
+                    <h3>
+                        <dt>Date de la commande:</dt>
+                    </h3>
+                        <dd>{{ command.datecommand|date('d-m-Y') }}</dd>
+                    <h3>
+                        <dt>Reste à payer:</dt>
+                    </h3>
+                        <dd>0 €</dd>
+                    
                 </dl>
             </div>
         </div>
@@ -75,11 +84,18 @@
     <p>*Une carte d'étudiant, de retraité ou de vétéran militaire, sera à présenter à l'entrée pour tout tarif réduit coché.</p>
 
     <P>Bonne Visite.</P>
-    <img src="{{ absolute_url('images/logo-louvre4.png') }}">    
+        
     <a href="{{ 'http://www.louvre.fr' }}">
-    <img src="{{ absolute_url('images/logo-louvre4.png') }}" height="50"></br>
-    Louvre.fr
-    </a>	
+        Louvre.fr
+    </a>
+    <p class="copyright text-muted">
+        Musée du Louvre,</br>
+        Avenue des champs verts,</br>
+        75058 Paris</br>
+        France</br>
+        Tel: +33 (0)1 45 99 00 26
+    </p>
+    <img src="{{ absolute_url('images/logo-louvre4.png') }}">	
 	
 {% endblock %}
 	
