@@ -12,7 +12,7 @@ class LouvreControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        
         $this->assertContains('Bienvenue sur la plateforme billeterie du Musée du Louvre', $client->getResponse()->getContent());
         $this->assertContains('Je commande', $client->getResponse()->getContent());
     }

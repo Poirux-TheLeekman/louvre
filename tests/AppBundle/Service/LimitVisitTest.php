@@ -14,6 +14,7 @@ class LimitVisitTest extends TestCase
 		
 		 $this->assertEquals(true,$result);
 	}
+	
 
 
 }
