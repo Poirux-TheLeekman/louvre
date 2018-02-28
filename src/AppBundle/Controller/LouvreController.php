@@ -46,8 +46,6 @@ class LouvreController extends Controller
         $tickets = new Ticket();
         
         $cost = $this->container->getParameter('ticket.type');
-       
-        
         $datestring = $command->getDatecommand()->format('Y-m-d H:i:s');
         
 
@@ -77,39 +75,22 @@ class LouvreController extends Controller
                         $tickets->setPrice($cost[$type]);
                     }
 
-
                     $totalOrder = $command->getTotalOrder() + $tickets->getPrice();
                     $command->setTotalOrder($totalOrder);
                       
 
                 }
                 
+                $em = $this->getDoctrine()->getManager();      
+                $em->persist($command);
+                $session->set('command',$command);
                 
-                $dateformat = $tickets->getVisit()->format('Y-m-d');
-                $em = $this->getDoctrine()->getManager();
-                $nbticket = $em->getRepository('AppBundle\Entity\Ticket')
-                ->countNumberVisit($dateformat);
-                $limit = $this->get('limit.visit');
-
-                $checkLimit = $limit->nbVisit($nbticket,count($command->getTickets()));
+                return $this->render('louvre/charge.html.twig', array(
                 
-                if($checkLimit) {
-                    
-                    $this->addFlash("limit", "tous les billets du jour sont déjà vendus, choisir ube autre date.");
-                           return $this->render('louvre/add.html.twig', array(
-                'form' => $form->createView()));
-                }
-                    
-                    
-                    $em->persist($command);
-                    $session->set('command',$command);
-                    
-                    return $this->render('louvre/charge.html.twig', array(
-                    
-                    'command'=>$command,
-                    'description' => "poursuivre le paiement",
-                    "publishable_key" => "pk_test_22Upp5xyncxXUx9EfBE54yEn"
-                    ));
+                'command'=>$command,
+                'description' => "poursuivre le paiement",
+                "publishable_key" => "pk_test_22Upp5xyncxXUx9EfBE54yEn"
+                ));
             }  
         }     
               
@@ -131,10 +112,7 @@ class LouvreController extends Controller
         $token  = $_POST['stripeToken'];
         $email  = $_POST['stripeEmail'];
         
-        
-        
         try {
-            
             
             $stripeCheckOut->chargeVisa($token, $email, $command->getTotalOrder());
             $em->flush();

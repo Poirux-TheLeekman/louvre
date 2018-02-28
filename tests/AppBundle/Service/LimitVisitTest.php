@@ -6,13 +6,6 @@ use AppBundle\Service\LimitVisit;
 
 class LimitVisitTest extends TestCase
 {
-	/*public function testNbVisitFalse()
-	{
-		$LimitVisit = new LimitVisit;
-		$result = $LimitVisit->nbVisit(999, 1);
-		
-		 $this->assertEquals(false,$result);
-	}*/
 
 	public function testNbVisitfTrue()
 	{
