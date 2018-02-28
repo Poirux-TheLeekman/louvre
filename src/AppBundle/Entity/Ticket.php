@@ -33,6 +33,7 @@ class Ticket
      *      maxMessage ="La date de visite ne doit pas être plus longue que {{ limit }}"
      * )
      * @TicketAssert\ConstraintDayOff
+     * @TicketAssert\ConstraintLimitSoldTicket
      * @ORM\Column(name="visit", type="datetime")
      */
     private $visit;

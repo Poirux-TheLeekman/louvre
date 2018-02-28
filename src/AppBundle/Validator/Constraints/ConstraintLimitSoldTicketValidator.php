@@ -4,6 +4,7 @@ namespace AppBundle\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,26 +14,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ConstraintLimitSoldTicketValidator extends ConstraintValidator
 {
 
+	const LIMIT = 1000;
+	protected $em;
+
+	public function __construct(EntityManagerInterface $em)
+	{
+		$this->em = $em;
+		
+	}
+
+
 	public function validate($value, Constraint $constraint)
 	{
-		$checkLimit = true;
+
+		$nbticketBdd = $this->em->getRepository('AppBundle\Entity\Ticket')
+                ->countNumberVisit($value->format('Y-m-d'))+1;
 		
-		/*$limit = $this->get('limit.visit');
-		$dateformat = $value->format('Y-m-d');
-		$checkLimit = $limit->nbVisit($dateformat);
-		dump($limit);*/
-		if($checkLimit) {
+		if($nbticketBdd>self::LIMIT) {
 			$this->context->buildViolation($constraint->message)
             ->addViolation();
 		}
-		//$em = $this->getDoctrine()->getManager();
 		
-		/*$nbticket = $em->getRepository('AppBundle\Entity\Ticket')
-            ->countNumberPrintedForCategory($limit);
-        if($nbticket>4) {
-        	$this->context->buildViolation($constraint->message)
-            ->setParameter('{{ string }}', $limit)
-            ->addViolation();
-        }*/
     }
 }
