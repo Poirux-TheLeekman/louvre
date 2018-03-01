@@ -1,16 +1,16 @@
 <?php
 namespace AppBundle\Service;
-//use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class LimitVisit
 {
-/*	private $em;
+	private $em;
 
 	public function __construct(EntityManagerInterface $em)
 	{
 		$this->em = $em;
-		dump($em);
-	}*/
+		
+	}
 
 	public function nbVisit($nbVisit, $countTicket)
 	{
@@ -18,4 +18,5 @@ class LimitVisit
 
            return($limit>1000);
 	}
+
 }

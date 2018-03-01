@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ConstraintLimitSoldTicketValidator extends ConstraintValidator
 {
@@ -21,19 +22,39 @@ class ConstraintLimitSoldTicketValidator extends ConstraintValidator
 	{
 		$this->em = $em;
 		
+		
 	}
 
 
 	public function validate($value, Constraint $constraint)
 	{
+		$countTickets = [];
 
-		$nbticketBdd = $this->em->getRepository('AppBundle\Entity\Ticket')
-                ->countNumberVisit($value->format('Y-m-d'))+1;
-		
-		if($nbticketBdd>self::LIMIT) {
-			$this->context->buildViolation($constraint->message)
-            ->addViolation();
+		foreach ($value->getTickets() as $k => $ticket) {
+
+			if(!isset($countTickets[$ticket->getVisit()->format('Y-m-d')])) {
+				
+				$countTickets[$ticket->getVisit()->format('Y-m-d')] = $this->em->getRepository('AppBundle\Entity\Ticket')
+                ->countNumberVisit($ticket->getVisit()->format('Y-m-d'));
+   
+                
+			}
+
+			$countTickets[$ticket->getVisit()->format('Y-m-d')]++;
+			
+
+			if($countTickets[$ticket->getVisit()->format('Y-m-d')]>self::LIMIT) {
+				
+				$this->context->buildViolation($constraint->message)
+	            ->atPath('tickets['.$k.'].visit')
+	            ->addViolation();
+			}
 		}
+
+		/*$nbticketBdd = $this->em->getRepository('AppBundle\Entity\Ticket')
+                ->countNumberVisit($value->format('Y-m-d'))+$countTickets[$value->format('Y-m-d')];*/
+		
+		
 		
     }
 }

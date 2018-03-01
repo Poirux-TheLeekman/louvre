@@ -4,11 +4,13 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as TicketAssert;
 
 /**
  * Command
  *
  * @ORM\Table(name="command")
+ * @TicketAssert\ConstraintLimitSoldTicket
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CommandRepository")
  */
 class Command
