@@ -95,7 +95,7 @@
         France</br>
         Tel: +33 (0)1 45 99 00 26
     </p>
-    <img src="{{ absolute_url('images/logo-louvre4.png') }}">	
-	
+    <!-- <img src="{{ app.request.getSchemeAndHttpHost() ~ asset('images/logo-louvre4.png') }}">	 -->
+	<img src="{{ absolute_url(asset('images/logo-louvre4.png')) }}">
 {% endblock %}
 	
