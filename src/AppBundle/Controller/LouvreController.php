@@ -7,6 +7,7 @@ use AppBundle\Entity\Ticket;
 use AppBundle\Form\CommandType;
 use AppBundle\Service\Calculator;
 use AppBundle\Service\GenerateReference;
+use AppBundle\Service\LimitVisit;
 use AppBundle\Service\StripeCheckOut;
 use AppBundle\Service\Mail;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +40,7 @@ class LouvreController extends Controller
      *
      * @Route("/command/new", name="command")
      */
-    public function addAction(Request $request, SessionInterface $session, Calculator $calculator, GenerateReference $GenerateReference)
+    public function addAction(Request $request, SessionInterface $session, Calculator $calculator, GenerateReference $GenerateReference, LimitVisit $LimitVisit)
     {
         //declare mes variables services et paramètres.
         $command = new Command();
@@ -53,7 +54,8 @@ class LouvreController extends Controller
         
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-                
+            
+
                 if ($form->isSubmitted() && $form->isValid()) {
                 
                 //genere le code référence de la commande.
