@@ -82,9 +82,6 @@ class LouvreController extends Controller
                       
 
                 }
-                
-                $em = $this->getDoctrine()->getManager();      
-                $em->persist($command);
 
                 $session->set('command',$command);
                 
@@ -118,6 +115,7 @@ class LouvreController extends Controller
         try {
             
             $stripeCheckOut->chargeVisa($token, $email, $command->getTotalOrder());
+            $em->persist($command);
             $em->flush();
             $mail->sendMail($command, $email);
             return $this->render('louvre/bill.html.twig', array(
