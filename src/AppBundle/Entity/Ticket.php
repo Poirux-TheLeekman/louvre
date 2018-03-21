@@ -43,8 +43,8 @@ class Ticket
      * @Assert\Length(
      *      min = 2,
      *      max = 50,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     *      minMessage = "Le nom doit avoir au moins {{ limit }} caractères de longeur.",
+     *      maxMessage = "Le prénom ne peut pas avoir plus de {{ limit }} caractères de longueur."
      * )
      * @ORM\Column(name="lastname", type="string", length=255)
      */
@@ -56,8 +56,8 @@ class Ticket
      * @Assert\Length(
      *      min = 2,
      *      max = 50,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     *      minMessage = "Le prénom doit avoir au moins {{ limit }} caractères de longeur.",
+     *      maxMessage = "Le prénom ne peut pas avoir plus de {{ limit }} caractères de longueur."
      * )
      * @ORM\Column(name="firstname", type="string", length=255)
      */

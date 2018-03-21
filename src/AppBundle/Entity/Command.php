@@ -32,7 +32,7 @@ class Command
      * @Assert\Length(
      *      min = 2,
      *      max = 50,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      minMessage = "Le nom doit avoir au moins {{ limit }} caractère de longeur.",
      *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
      * )
      * @ORM\Column(name="holder", type="string", length=255)
@@ -64,7 +64,7 @@ class Command
      * @var string
      * @Assert\NotBlank()
      * @Assert\Email(
-     *     message = "The email '{{ value }}' is not a valid email.",
+     *     message = "l email '{{ value }}' n est pas un email valide.",
      *     checkMX = true
      * )
      * @ORM\Column(name="mail", type="string", length=255)

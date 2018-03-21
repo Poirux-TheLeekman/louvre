@@ -40,7 +40,7 @@ class LouvreController extends Controller
      *
      * @Route("/command/new", name="command")
      */
-    public function addAction(Request $request, SessionInterface $session, Calculator $calculator, GenerateReference $GenerateReference, LimitVisit $LimitVisit)
+    public function addAction(Request $request, SessionInterface $session, Calculator $calculator, GenerateReference $GenerateReference)
     {
         //declare mes variables services et paramètres.
         $command = new Command();
@@ -85,6 +85,7 @@ class LouvreController extends Controller
                 
                 $em = $this->getDoctrine()->getManager();      
                 $em->persist($command);
+
                 $session->set('command',$command);
                 
                 return $this->render('louvre/charge.html.twig', array(
@@ -124,7 +125,7 @@ class LouvreController extends Controller
                     ));
         } catch(\Stripe\Error\Card $e) {
 
-            $this->addFlash("chargeFailed","Oups, le paiement a echoué.");
+            $this->addFlash("chargeFailed","Oups, le paiement a echoué !!! Veuillez recommencer.");
             return $this->render('louvre/charge.html.twig', array(
                     'command'=>$command,
                     'description' => "poursuivre le paiement",

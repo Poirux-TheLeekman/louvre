@@ -31,22 +31,5 @@ class LouvreControllerTest extends WebTestCase
   
     }
 
-    /*public function testAddNewCommand()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/');
-        $form = $crawler->selectButton('Add To Cart')->form();
-
-        $form['reservation[bookingDate]'] = '2028-08-08';
-        $form['reservation[visitType]'] = 'fullDay';
-        $form['reservation[email]'] = 'john.doe@mail.com';
-        $form['reservation[tickets][0][guest][firstName]'] = 'john';
-        $form['reservation[tickets][0][guest][lastName]'] = 'Doe';
-        $form['reservation[tickets][0][guest][dateOfBirth]'] = '01/01/1950';
-        $form['reservation[tickets][0][guest][country]'] = 'FR';
-        $form['reservation[tickets][0][reducedPrice]'] = 1;
-        
-        $client->submit($form);
-    }*/
     
 }
