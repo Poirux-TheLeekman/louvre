@@ -42,7 +42,7 @@ class Command
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datecommand", type="datetimetz")
+     * @ORM\Column(name="datecommand", type="datetime")
      */
     private $datecommand;
 
