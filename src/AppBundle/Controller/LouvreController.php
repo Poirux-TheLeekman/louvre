@@ -113,9 +113,9 @@ class LouvreController extends Controller
         $email  = $_POST['stripeEmail'];
         
         try {
-            
-            $stripeCheckOut->chargeVisa($token, $email, $command->getTotalOrder());
             $em->persist($command);
+            $stripeCheckOut->chargeVisa($token, $email, $command->getTotalOrder());
+            
             $em->flush();
             $mail->sendMail($command, $email);
             return $this->render('louvre/bill.html.twig', array(
